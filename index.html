@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Security & Performance Meta Tags - Modified for GitHub Pages compatibility -->
+    <!-- Security & Performance Meta Tags -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data: https://github.com;">
     <meta name="referrer" content="no-referrer">
 
@@ -37,6 +37,14 @@
             --accent-orange: #ff851b;
             --border-color: #333;
             --font-mono: 'Fira Code', monospace;
+            
+            /* Enhanced variables for modern effects */
+            --glass-bg: rgba(26, 26, 26, 0.7);
+            --glass-border: rgba(0, 255, 255, 0.2);
+            --shadow-glow: 0 0 20px rgba(0, 255, 255, 0.3);
+            --shadow-glow-intense: 0 0 40px rgba(0, 255, 255, 0.5);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         /* --- Utility Classes --- */
@@ -65,7 +73,7 @@
 
         body {
             font-family: var(--font-mono);
-            background-color: var(--bg-primary);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
@@ -78,7 +86,7 @@
             overflow-x: hidden;
         }
 
-        /* Military Grid Background - more subtle */
+        /* Enhanced Military Grid Background with multiple layers */
         body::before {
             content: '';
             position: fixed;
@@ -87,11 +95,26 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 65, 0.05) 0%, transparent 50%);
+            background-size: 50px 50px, 50px 50px, 300px 300px, 400px 400px;
+            z-index: -2;
             animation: gridMove 60s linear infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 50% 50%, transparent 0%, rgba(10, 10, 10, 0.4) 100%);
+            z-index: -1;
+            pointer-events: none;
         }
 
         @keyframes gridMove {
@@ -99,23 +122,28 @@
             100% { transform: translate(50px, 50px); }
         }
 
-        /* --- Main Container --- */
+        /* --- Enhanced Main Container with Glassmorphism --- */
         .container {
             width: 100%;
             max-width: 900px;
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                var(--shadow-glow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
-            animation: containerPulse 15s infinite alternate;
+            animation: containerFloat 20s ease-in-out infinite;
         }
         
-        @keyframes containerPulse {
-            0% { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); }
-            100% { box-shadow: 0 10px 40px rgba(0, 255, 255, 0.1); }
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
         
         .container::before {
@@ -124,9 +152,42 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
-            animation: scanline 10s linear infinite;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--accent-cyan) 20%, 
+                var(--accent-green) 50%, 
+                var(--accent-cyan) 80%, 
+                transparent 100%);
+            animation: scanline 8s linear infinite;
+            filter: blur(1px);
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg at 50% 50%,
+                transparent 0deg,
+                var(--accent-cyan) 60deg,
+                transparent 120deg,
+                var(--accent-green) 180deg,
+                transparent 240deg,
+                var(--accent-cyan) 300deg,
+                transparent 360deg
+            );
+            animation: rotate 30s linear infinite;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @keyframes scanline {
@@ -134,42 +195,71 @@
             100% { transform: translateX(100%); }
         }
 
-        /* --- Header --- */
+        /* --- Enhanced Header --- */
         header {
             text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
             position: relative;
         }
 
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            transform: translateX(-50%);
+            animation: headerGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes headerGlow {
+            0%, 100% { opacity: 0.5; width: 100px; }
+            50% { opacity: 1; width: 200px; }
+        }
+
         h1 {
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-size: clamp(1.8rem, 5vw, 3rem);
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green), var(--accent-cyan));
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: flicker 3s infinite alternate;
+            animation: gradientShift 4s ease-in-out infinite, flicker 3s infinite alternate;
             position: relative;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         h1::after {
             content: 'CLASSIFIED';
             position: absolute;
-            top: -15px;
+            top: -20px;
             right: 0;
-            font-size: 0.5rem;
+            font-size: 0.6rem;
             color: var(--accent-red);
-            letter-spacing: 1px;
-            animation: blink 2s infinite;
+            letter-spacing: 2px;
+            animation: blink 2s infinite, pulse 2s ease-in-out infinite;
         }
 
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.3; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         @keyframes flicker {
@@ -188,23 +278,34 @@
 
         .subtitle {
             color: var(--text-secondary);
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
-            margin-top: 5px;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            margin-top: 10px;
+            opacity: 0.9;
+            letter-spacing: 1px;
         }
 
-        /* --- Control Panel --- */
+        /* --- Enhanced Control Panel --- */
         .control-panel {
             display: grid;
-            gap: 20px;
+            gap: 25px;
         }
 
         .control-group {
-            background-color: var(--bg-tertiary);
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
+            background: rgba(42, 42, 42, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
             position: relative;
             overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .control-group:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 255, 255, 0.2);
+            border-color: rgba(0, 255, 255, 0.3);
         }
 
         .control-group::before {
@@ -225,107 +326,131 @@
 
         .control-group label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             color: var(--accent-cyan);
             font-weight: 600;
             text-transform: uppercase;
-            font-size: clamp(0.75rem, 2vw, 0.85rem);
-            letter-spacing: 1px;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
 
-        /* --- Slider --- */
+        /* --- Enhanced Slider --- */
         .slider-container {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
 
         input[type="range"] {
             -webkit-appearance: none;
             appearance: none;
             width: 100%;
-            height: 8px;
-            background: var(--bg-primary);
-            border-radius: 5px;
+            height: 10px;
+            background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-green) var(--value, 50%), var(--bg-primary) var(--value, 50%), var(--bg-primary) 100%);
+            border-radius: 10px;
             outline: none;
-            transition: opacity 0.2s;
+            transition: var(--transition-smooth);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 20px;
-            height: 20px;
-            background: var(--accent-green);
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle, var(--accent-green), var(--accent-cyan));
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 10px var(--accent-green);
-            transition: all 0.3s;
+            box-shadow: 
+                0 0 20px var(--accent-green),
+                0 0 40px var(--accent-cyan),
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: var(--transition-bounce);
         }
 
         input[type="range"]::-webkit-slider-thumb:hover, input[type="range"]::-webkit-slider-thumb:focus {
             transform: scale(1.2);
-            box-shadow: 0 0 15px var(--accent-green);
+            box-shadow: 
+                0 0 30px var(--accent-green),
+                0 0 60px var(--accent-cyan),
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: var(--accent-green);
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle, var(--accent-green), var(--accent-cyan));
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 10px var(--accent-green);
-            transition: all 0.3s;
+            box-shadow: 
+                0 0 20px var(--accent-green),
+                0 0 40px var(--accent-cyan),
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: var(--transition-bounce);
+            border: none;
         }
 
         input[type="range"]::-moz-range-thumb:hover, input[type="range"]::-moz-range-thumb:focus {
             transform: scale(1.2);
-            box-shadow: 0 0 15px var(--accent-green);
+            box-shadow: 
+                0 0 30px var(--accent-green),
+                0 0 60px var(--accent-cyan),
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         #lengthValue {
-            min-width: 50px;
+            min-width: 60px;
             text-align: center;
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             font-weight: bold;
             color: var(--accent-green);
             position: relative;
+            text-shadow: 0 0 10px var(--accent-green);
+            padding: 5px 10px;
+            background: rgba(0, 255, 65, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 65, 0.3);
         }
 
         #lengthValue::after {
             content: 'CHARS';
             position: absolute;
-            bottom: -12px;
+            bottom: -15px;
             left: 0;
             right: 0;
-            font-size: 0.5rem;
+            font-size: 0.6rem;
             color: var(--text-secondary);
+            text-shadow: none;
         }
 
-        /* --- Accessible Checkboxes --- */
+        /* --- Enhanced Checkboxes --- */
         .checkbox-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
         }
 
         .checkbox-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             cursor: pointer;
             position: relative;
-            padding: 5px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
+            padding: 12px;
+            border-radius: 8px;
+            transition: var(--transition-smooth);
+            background: rgba(0, 255, 255, 0.02);
+            border: 1px solid transparent;
         }
 
         .checkbox-item:hover {
-            background-color: rgba(0, 255, 255, 0.1);
+            background: rgba(0, 255, 255, 0.1);
+            border-color: rgba(0, 255, 255, 0.3);
+            transform: translateX(5px);
         }
         
         .checkbox-item input[type="checkbox"] {
-            /* Hide the actual checkbox */
             position: absolute;
             opacity: 0;
             cursor: pointer;
@@ -334,63 +459,99 @@
         }
 
         .checkbox-visual {
-            height: 18px;
-            width: 18px;
-            background-color: var(--bg-primary);
+            height: 22px;
+            width: 22px;
+            background: var(--bg-primary);
             border: 2px solid var(--accent-cyan);
-            border-radius: 4px;
-            transition: all 0.3s;
+            border-radius: 6px;
+            transition: var(--transition-bounce);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkbox-visual::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, var(--accent-green), transparent);
+            transition: var(--transition-smooth);
+            transform: translate(-50%, -50%);
         }
         
         .checkbox-item input[type="checkbox"]:checked ~ .checkbox-visual {
-            background-color: var(--accent-green);
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
             border-color: var(--accent-green);
-            animation: checkboxPulse 0.5s;
+            animation: checkboxPulse 0.6s;
+            box-shadow: 0 0 20px var(--accent-green);
+        }
+
+        .checkbox-item input[type="checkbox"]:checked ~ .checkbox-visual::before {
+            width: 100%;
+            height: 100%;
         }
 
         @keyframes checkboxPulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
 
         .checkbox-item input[type="checkbox"]:checked ~ .checkbox-visual::after {
-            content: '\f00c'; /* Font Awesome checkmark */
+            content: '\f00c';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             color: var(--bg-primary);
-            font-size: 10px;
+            font-size: 12px;
+            animation: checkmarkAppear 0.3s ease-out;
+        }
+
+        @keyframes checkmarkAppear {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
         
         .checkbox-item input[type="checkbox"]:focus ~ .checkbox-visual {
-            box-shadow: 0 0 0 2px var(--bg-secondary), 0 0 0 4px var(--accent-cyan);
+            box-shadow: 0 0 0 3px var(--bg-secondary), 0 0 0 6px var(--accent-cyan);
         }
 
         .checkbox-item span:not(.checkbox-visual) {
-            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            transition: var(--transition-smooth);
         }
 
-        /* --- Output Display --- */
+        .checkbox-item:hover span:not(.checkbox-visual) {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 5px var(--accent-cyan);
+        }
+
+        /* --- Enhanced Output Display --- */
         .output-display {
-            background-color: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 5px;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9), rgba(26, 26, 26, 0.9));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 12px;
             font-family: var(--font-mono);
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             word-break: break-all;
-            min-height: 60px;
+            min-height: 70px;
             display: flex;
             align-items: center;
             color: var(--accent-green);
-            letter-spacing: 1px;
-            text-shadow: 0 0 5px var(--accent-green);
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--accent-green);
             position: relative;
             overflow: hidden;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .output-display::before {
@@ -400,8 +561,27 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
             animation: outputScan 3s infinite;
+        }
+
+        .output-display::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.1) 50%, transparent 70%),
+                linear-gradient(-45deg, transparent 30%, rgba(0, 255, 65, 0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%); }
+            100% { transform: translateX(100%) translateY(100%); }
         }
 
         @keyframes outputScan {
@@ -409,23 +589,25 @@
             100% { left: 100%; }
         }
 
-        /* --- Strength Indicator --- */
+        /* --- Enhanced Strength Indicator --- */
         .strength-container {
-            margin-top: 10px;
+            margin-top: 15px;
         }
         .strength-bar {
             width: 100%;
-            height: 10px;
-            background-color: var(--bg-primary);
-            border-radius: 5px;
+            height: 12px;
+            background: var(--bg-primary);
+            border-radius: 10px;
             overflow: hidden;
             position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         .strength-bar-fill {
             height: 100%;
             width: 0%;
-            transition: width 0.4s ease, background-color 0.4s ease;
+            transition: width 0.6s ease, background-color 0.6s ease;
             position: relative;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
         }
         .strength-bar-fill::after {
             content: '';
@@ -434,7 +616,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             animation: strengthScan 2s infinite;
         }
         @keyframes strengthScan {
@@ -444,45 +626,46 @@
         .strength-label {
             display: flex;
             justify-content: space-between;
-            font-size: clamp(0.7rem, 2vw, 0.8rem);
-            margin-top: 5px;
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
+            margin-top: 8px;
         }
         .strength-text {
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .entropy-text {
             color: var(--text-secondary);
         }
 
-        /* --- Action Buttons --- */
+        /* --- Enhanced Action Buttons --- */
         .action-buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 15px;
+            margin-top: 25px;
         }
         .btn {
             flex: 1;
-            padding: 12px 15px;
+            padding: 15px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             font-family: var(--font-mono);
-            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition-bounce);
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
         }
         .btn:focus {
-            outline: 2px solid var(--accent-cyan);
-            outline-offset: 2px;
+            outline: none;
+            box-shadow: 0 0 0 3px var(--accent-cyan);
         }
         .btn::before {
             content: '';
@@ -492,90 +675,106 @@
             width: 0;
             height: 0;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
             transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            transition: width 0.8s, height 0.8s;
         }
         .btn:active::before {
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
         }
         .btn-primary {
-            background: linear-gradient(45deg, var(--accent-green), var(--accent-cyan));
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
             color: var(--bg-primary);
+            box-shadow: 0 4px 20px rgba(0, 255, 65, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 255, 65, 0.6);
         }
         .btn-secondary {
-            background-color: var(--bg-tertiary);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: var(--accent-cyan);
-            border: 1px solid var(--accent-cyan);
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.2);
         }
         .btn-secondary:hover {
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4);
+            border-color: var(--accent-cyan);
+            background: rgba(0, 255, 255, 0.1);
         }
 
-        /* --- History Log --- */
+        /* --- Enhanced History Log --- */
         .history-log {
-            margin-top: 20px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
+            margin-top: 30px;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
         }
         .history-log h2 {
             color: var(--accent-cyan);
-            margin-bottom: 10px;
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 15px;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            text-shadow: 0 0 10px var(--accent-cyan);
         }
         .history-log h2::before {
             content: '';
             display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-red);
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, var(--accent-red), transparent);
             border-radius: 50%;
             animation: pulse 1.5s infinite;
+            box-shadow: 0 0 10px var(--accent-red);
         }
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
         }
         .history-list {
             list-style: none;
-            max-height: 150px;
+            max-height: 180px;
             overflow-y: auto;
-            background-color: var(--bg-tertiary);
-            padding: 8px;
-            border-radius: 5px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
         }
         .history-list::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         .history-list::-webkit-scrollbar-track {
             background: var(--bg-primary);
+            border-radius: 4px;
         }
         .history-list::-webkit-scrollbar-thumb {
-            background: var(--accent-cyan);
-            border-radius: 3px;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-green));
+            border-radius: 4px;
         }
         .history-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px;
+            padding: 10px;
             border-bottom: 1px solid var(--border-color);
-            font-size: clamp(0.75rem, 2vw, 0.9rem);
-            transition: background-color 0.3s;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            transition: var(--transition-smooth);
+            border-radius: 6px;
+            margin-bottom: 2px;
         }
         .history-item:hover {
-            background-color: rgba(0, 255, 255, 0.1);
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateX(5px);
         }
         .history-item:last-child {
             border-bottom: none;
@@ -583,7 +782,7 @@
         .history-password-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 4px;
             flex: 1;
             min-width: 0;
         }
@@ -593,7 +792,7 @@
             word-break: break-all;
         }
         .history-timestamp {
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             color: var(--text-secondary);
             opacity: 0.7;
         }
@@ -602,23 +801,26 @@
             border: none;
             color: var(--accent-cyan);
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: color 0.2s, transform 0.2s;
-            padding: 5px;
+            font-size: 1rem;
+            transition: var(--transition-bounce);
+            padding: 8px;
             flex-shrink: 0;
+            border-radius: 6px;
         }
         .history-copy-btn:hover, .history-copy-btn:focus {
             color: var(--accent-green);
-            transform: scale(1.2);
+            transform: scale(1.2) rotate(5deg);
+            background: rgba(0, 255, 65, 0.1);
             outline: none;
         }
         .clear-history-btn {
-            margin-top: 8px;
-            background-color: var(--accent-red);
+            margin-top: 12px;
+            background: linear-gradient(135deg, var(--accent-red), #cc0000);
             color: var(--text-primary);
             width: 100%;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(255, 65, 54, 0.3);
         }
         .clear-history-btn::after {
             content: '';
@@ -627,7 +829,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             animation: clearBtnScan 3s infinite;
         }
         @keyframes clearBtnScan {
@@ -635,35 +837,39 @@
             100% { left: 100%; }
         }
         .clear-history-btn:hover {
-            box-shadow: 0 5px 15px rgba(255, 65, 54, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(255, 65, 54, 0.5);
         }
 
-        /* --- Footer --- */
+        /* --- Enhanced Footer --- */
         footer {
             text-align: center;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid var(--border-color);
-            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
             color: var(--text-secondary);
         }
         footer p {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         .footer-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             color: var(--accent-cyan);
             text-decoration: none;
-            transition: all 0.3s ease;
-            padding: 8px 12px;
-            border-radius: 5px;
-            border: 1px solid transparent;
-            background-color: rgba(0, 255, 255, 0.05);
+            transition: var(--transition-bounce);
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
-            min-height: 44px; /* Minimum touch target size for mobile */
+            min-height: 48px;
+            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.2);
         }
         .footer-link::before {
             content: '';
@@ -672,152 +878,179 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
         }
         .footer-link:hover, .footer-link:focus {
             color: var(--accent-green);
             text-decoration: none;
             border-color: var(--accent-cyan);
-            background-color: rgba(0, 255, 255, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
+            background: rgba(0, 255, 255, 0.15);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4);
         }
         .footer-link:hover::before, .footer-link:focus::before {
             left: 100%;
         }
         .footer-link:active {
-            transform: translateY(0);
+            transform: translateY(-1px) scale(1.02);
         }
         .footer-link i {
-            font-size: 1.1em;
-            transition: transform 0.3s ease;
+            font-size: 1.2em;
+            transition: var(--transition-bounce);
         }
         .footer-link:hover i, .footer-link:focus i {
-            transform: rotate(15deg) scale(1.1);
+            transform: rotate(15deg) scale(1.2);
         }
         .external-link-indicator {
             font-size: 0.8em;
             opacity: 0.8;
-            margin-left: 2px;
+            margin-left: 4px;
         }
         .heart {
             color: var(--accent-red);
             animation: heartbeat 1.5s ease-in-out infinite;
             display: inline-block;
+            filter: drop-shadow(0 0 5px var(--accent-red));
         }
         @keyframes heartbeat {
             0% { transform: scale(1); }
-            14% { transform: scale(1.1); }
+            14% { transform: scale(1.15); }
             28% { transform: scale(1); }
-            42% { transform: scale(1.1); }
+            42% { transform: scale(1.15); }
             70% { transform: scale(1); }
         }
 
-        /* --- Toast Notification --- */
+        /* --- Enhanced Toast Notification --- */
         .toast {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            left: 20px;
-            background-color: var(--accent-green);
+            bottom: 30px;
+            right: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
             color: var(--bg-primary);
-            padding: 12px 20px;
-            border-radius: 5px;
+            padding: 15px 25px;
+            border-radius: 10px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.5);
+            letter-spacing: 1.5px;
+            box-shadow: 0 8px 30px rgba(0, 255, 65, 0.5);
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.3s, transform 0.3s;
-            z-index: 1001; /* Above modal */
+            transform: translateY(30px) scale(0.9);
+            transition: var(--transition-bounce);
+            z-index: 1001;
             text-align: center;
-            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .toast.show {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
-        /* --- Confirmation Modal --- */
+        /* --- Enhanced Confirmation Modal --- */
         .modal {
-            display: none; /* Hidden by default */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
         .modal-content {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--accent-red);
-            border-radius: 5px;
-            padding: 20px;
-            max-width: 400px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 450px;
             width: 100%;
             text-align: center;
-            animation: modalAppear 0.3s;
+            animation: modalAppear 0.4s var(--transition-bounce);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
         @keyframes modalAppear {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+            from { 
+                opacity: 0; 
+                transform: scale(0.7) translateY(50px);
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1) translateY(0);
+            }
         }
         .modal-title {
             color: var(--accent-red);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            letter-spacing: 2px;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            text-shadow: 0 0 10px var(--accent-red);
         }
         .modal-text {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: var(--text-primary);
-            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+            line-height: 1.6;
         }
         .modal-buttons {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             justify-content: center;
         }
         .modal-btn {
-            padding: 10px 15px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-family: var(--font-mono);
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             cursor: pointer;
-            transition: all 0.3s;
-            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            transition: var(--transition-bounce);
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            min-width: 120px;
         }
         .modal-btn:focus {
-            outline: 2px solid var(--accent-cyan);
-            outline-offset: 2px;
+            outline: none;
+            box-shadow: 0 0 0 3px var(--accent-cyan);
         }
         .modal-confirm {
-            background-color: var(--accent-red);
+            background: linear-gradient(135deg, var(--accent-red), #cc0000);
             color: var(--text-primary);
+            box-shadow: 0 4px 20px rgba(255, 65, 54, 0.3);
         }
         .modal-cancel {
-            background-color: var(--bg-tertiary);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: var(--accent-cyan);
-            border: 1px solid var(--accent-cyan);
+            border: 1px solid var(--glass-border);
         }
         .modal-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05);
+        }
+        .modal-confirm:hover {
+            box-shadow: 0 8px 30px rgba(255, 65, 54, 0.5);
+        }
+        .modal-cancel:hover {
+            box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4);
         }
 
         /* --- Responsive Design --- */
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 20px;
+                margin: 10px;
             }
             
             .action-buttons {
@@ -835,6 +1068,12 @@
             .modal-btn {
                 width: 100%;
             }
+
+            .toast {
+                right: 20px;
+                left: 20px;
+                bottom: 20px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -843,7 +1082,7 @@
             }
             
             .container {
-                padding: 10px;
+                padding: 15px;
             }
             
             h1 {
@@ -851,26 +1090,26 @@
             }
             
             .control-group {
-                padding: 10px;
+                padding: 15px;
             }
             
             .slider-container {
-                gap: 10px;
+                gap: 15px;
             }
             
             .output-display {
-                padding: 10px;
-                min-height: 50px;
+                padding: 15px;
+                min-height: 60px;
             }
             
             .btn {
-                padding: 10px;
-                font-size: 0.85rem;
+                padding: 12px;
+                font-size: 0.9rem;
             }
             
             .footer-link {
-                padding: 10px 15px;
-                font-size: 0.85rem;
+                padding: 12px 18px;
+                font-size: 0.9rem;
             }
         }
 
@@ -880,7 +1119,7 @@
             }
             
             .control-group {
-                padding: 20px;
+                padding: 25px;
             }
         }
 
@@ -898,16 +1137,10 @@
 
         /* --- Reduced motion support --- */
         @media (prefers-reduced-motion: reduce) {
-            .footer-link::before,
-            .footer-link:hover::before,
-            .footer-link:focus::before {
-                animation: none;
-                transition: none;
-            }
-            
-            .footer-link:hover i,
-            .footer-link:focus i {
-                transform: none;
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
@@ -1025,7 +1258,7 @@
 
     <script>
     /**
-     * Tactical Cipher Generator - Robust and Secure
+     * Tactical Cipher Generator - Professional & Modern
      * Encapsulated in an IIFE to prevent global scope pollution.
      */
     (function() {
@@ -1042,7 +1275,7 @@
             AMBIGUOUS_CHARS: 'ilLI1oO0',
             HISTORY_KEY: 'tacticalCipherHistory',
             MAX_HISTORY_ITEMS: 10,
-            DEBOUNCE_DELAY: 150 // ms for slider input
+            DEBOUNCE_DELAY: 150
         };
 
         // --- DOM Element Cache ---
@@ -1071,12 +1304,6 @@
         let lastFocusedElement;
 
         // --- Utility Functions ---
-        /**
-         * Debounces a function call.
-         * @param {Function} func The function to debounce.
-         * @param {number} delay The delay in milliseconds.
-         * @returns {Function} The debounced function.
-         */
         function debounce(func, delay) {
             let timeoutId;
             return function(...args) {
@@ -1085,42 +1312,29 @@
             };
         }
 
-        /**
-         * Escapes special characters for use in a regular expression.
-         * @param {string} string The string to escape.
-         * @returns {string} The escaped string.
-         */
         function escapeRegExp(string) {
             return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
 
         // --- Core Application Logic ---
         const App = {
-            /**
-             * Initializes the application.
-             */
             init() {
                 this.checkCryptoSupport();
                 this.cacheElements();
                 this.bindEvents();
-                this.generatePassword(); // Initial generation
+                this.generatePassword();
                 this.loadHistory();
                 this.enhanceFooterLink();
+                this.updateSliderBackground();
             },
 
-            /**
-             * Checks for secure crypto API support.
-             */
             checkCryptoSupport() {
                 if (!window.crypto || !window.crypto.getRandomValues) {
-                    this.fatalError('CRITICAL ERROR: Secure random number generation is not available in this browser. This generator cannot operate securely.');
+                    this.fatalError('CRITICAL ERROR: Secure random number generation is not available in this browser.');
                     throw new Error('Crypto API not supported.');
                 }
             },
 
-            /**
-             * Caches DOM elements and checks for their existence.
-             */
             cacheElements() {
                 for (const key in elements) {
                     if (!elements[key]) {
@@ -1129,14 +1343,12 @@
                 }
             },
 
-            /**
-             * Binds event listeners to DOM elements.
-             */
             bindEvents() {
                 const debouncedGenerate = debounce(this.generatePassword.bind(this), CONFIG.DEBOUNCE_DELAY);
 
                 elements.lengthSlider.addEventListener('input', () => {
                     elements.lengthValue.textContent = elements.lengthSlider.value;
+                    this.updateSliderBackground();
                     debouncedGenerate();
                 });
 
@@ -1156,17 +1368,18 @@
                     if (e.key === 'Escape') this.hideClearConfirmation();
                 });
 
-                // Add touch event support for mobile
                 this.addTouchSupport();
             },
 
-            /**
-             * Enhances the footer link for better accessibility and user experience
-             */
+            updateSliderBackground() {
+                const value = (elements.lengthSlider.value - elements.lengthSlider.min) / 
+                              (elements.lengthSlider.max - elements.lengthSlider.min) * 100;
+                elements.lengthSlider.style.setProperty('--value', value + '%');
+            },
+
             enhanceFooterLink() {
                 if (!elements.footerLink) return;
 
-                // Add keyboard navigation support
                 elements.footerLink.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -1174,7 +1387,6 @@
                     }
                 });
 
-                // Add touch feedback for mobile
                 elements.footerLink.addEventListener('touchstart', function() {
                     this.style.transform = 'scale(0.95)';
                 }, { passive: true });
@@ -1183,27 +1395,19 @@
                     this.style.transform = '';
                 }, { passive: true });
 
-                // Add click handler with feedback
                 elements.footerLink.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.openLinkWithFeedback(elements.footerLink.href);
                 });
             },
 
-            /**
-             * Opens a link with user feedback
-             * @param {string} url The URL to open
-             */
             openLinkWithFeedback(url) {
-                // Show loading state
                 const originalContent = elements.footerLink.innerHTML;
                 elements.footerLink.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Opening...</span>';
                 elements.footerLink.style.pointerEvents = 'none';
 
-                // Open in new tab
                 window.open(url, '_blank', 'noopener,noreferrer');
 
-                // Restore original state after a short delay
                 setTimeout(() => {
                     elements.footerLink.innerHTML = originalContent;
                     elements.footerLink.style.pointerEvents = '';
@@ -1211,11 +1415,7 @@
                 }, 500);
             },
 
-            /**
-             * Adds touch event support for better mobile experience
-             */
             addTouchSupport() {
-                // Add touch feedback to buttons
                 const buttons = document.querySelectorAll('.btn, .history-copy-btn');
                 buttons.forEach(button => {
                     button.addEventListener('touchstart', function() {
@@ -1228,9 +1428,6 @@
                 });
             },
 
-            /**
-             * Generates a new password based on user settings.
-             */
             generatePassword() {
                 const length = parseInt(elements.lengthSlider.value, 10);
                 if (isNaN(length) || length < 8 || length > 256) {
@@ -1281,11 +1478,6 @@
                 this.saveToHistory(password);
             },
 
-            /**
-             * Gets a random character from a given character set.
-             * @param {string} charSet The set of characters to choose from.
-             * @returns {string} A single random character.
-             */
             getRandomChar(charSet) {
                 if (charSet.length === 0) return '';
                 const randomArray = new Uint32Array(1);
@@ -1293,11 +1485,6 @@
                 return charSet[randomArray[0] % charSet.length];
             },
             
-            /**
-             * Shuffles an array using the Fisher-Yates algorithm.
-             * @param {Array} array The array to shuffle.
-             * @returns {Array} The shuffled array.
-             */
             shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(window.crypto.getRandomValues(new Uint32Array(1))[0] * (i + 1) / 0x100000000);
@@ -1306,21 +1493,11 @@
                 return array;
             },
 
-            /**
-             * Calculates the entropy of a password.
-             * @param {number} poolSize The size of the character pool.
-             * @param {number} length The length of the password.
-             * @returns {number} The entropy in bits.
-             */
             calculateEntropy(poolSize, length) {
                 if (poolSize === 0 || length === 0) return 0;
                 return Math.round(length * Math.log2(poolSize));
             },
 
-            /**
-             * Updates the strength indicator UI.
-             * @param {number} entropy The calculated entropy.
-             */
             updateStrengthIndicator(entropy) {
                 let strength, color, width;
                 if (entropy < 40) {
@@ -1334,15 +1511,20 @@
                 }
 
                 elements.strengthBarFill.style.width = width;
-                elements.strengthBarFill.style.backgroundColor = color;
+                elements.strengthBarFill.style.background = `linear-gradient(90deg, ${color}, ${this.adjustColor(color, 20)})`;
                 elements.strengthText.textContent = `STRENGTH: ${strength}`;
                 elements.strengthText.style.color = color;
                 elements.entropyText.textContent = `Entropy: ${entropy} bits`;
             },
 
-            /**
-             * Copies the generated password to the clipboard.
-             */
+            adjustColor(color, amount) {
+                const num = parseInt(color.replace('#', ''), 16);
+                const r = Math.min(255, ((num >> 16) & 255) + amount);
+                const g = Math.min(255, ((num >> 8) & 255) + amount);
+                const b = Math.min(255, (num & 255) + amount);
+                return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
+            },
+
             copyPasswordToClipboard() {
                 const password = elements.passwordOutput.textContent;
                 if (!password || password.startsWith('ERROR')) {
@@ -1353,12 +1535,7 @@
                 this.copyToClipboard(password);
             },
 
-            /**
-             * Helper function to copy text to clipboard with fallback
-             * @param {string} text The text to copy
-             */
             copyToClipboard(text) {
-                // Fallback for browsers that don't support the Clipboard API
                 if (!navigator.clipboard) {
                     const textArea = document.createElement('textarea');
                     textArea.value = text;
@@ -1389,22 +1566,15 @@
                 });
             },
 
-            /**
-             * Shows a toast notification.
-             * @param {string} message The message to display.
-             * @param {string} type The type of toast (success/error).
-             */
             showToast(message, type = 'success') {
                 elements.toast.textContent = message;
-                elements.toast.style.backgroundColor = type === 'success' ? 'var(--accent-green)' : 'var(--accent-red)';
+                elements.toast.style.background = type === 'success' ? 
+                    'linear-gradient(135deg, var(--accent-green), var(--accent-cyan))' : 
+                    'linear-gradient(135deg, var(--accent-red), #cc0000)';
                 elements.toast.classList.add('show');
                 setTimeout(() => elements.toast.classList.remove('show'), 3000);
             },
             
-            /**
-             * Shows a fatal error message and disables the app.
-             * @param {string} message The error message.
-             */
             fatalError(message) {
                 elements.passwordOutput.textContent = message;
                 elements.generateBtn.disabled = true;
@@ -1412,25 +1582,19 @@
                 this.showToast(message, 'error');
             },
 
-            /**
-             * Shows a non-fatal error message in the output area.
-             * @param {string} message The error message.
-             */
             showError(message) {
                 elements.passwordOutput.textContent = message;
             },
 
-            // --- History Management ---
             saveToHistory(password) {
                 try {
-                    // Check if localStorage is available
                     if (typeof Storage === 'undefined') {
                         console.warn('localStorage is not available on this device.');
                         return;
                     }
                     
                     let history = JSON.parse(localStorage.getItem(CONFIG.HISTORY_KEY) || '[]');
-                    if (history.length > 0 && history[0].password === password) return; // Avoid duplicates
+                    if (history.length > 0 && history[0].password === password) return;
                     
                     history.unshift({ password, timestamp: new Date().toISOString() });
                     if (history.length > CONFIG.MAX_HISTORY_ITEMS) {
@@ -1450,7 +1614,6 @@
 
             renderHistory() {
                 try {
-                    // Check if localStorage is available
                     if (typeof Storage === 'undefined') {
                         elements.historyList.innerHTML = '<li class="history-item">History is not available on this device.</li>';
                         return;
@@ -1507,7 +1670,6 @@
 
             clearHistory() {
                 try {
-                    // Check if localStorage is available
                     if (typeof Storage === 'undefined') {
                         this.showToast('History is not available on this device.', 'error');
                         return;

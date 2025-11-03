@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Security & Performance Meta Tags -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:;">
+    <!-- Security & Performance Meta Tags - Modified for GitHub Pages compatibility -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data: https://github.com;">
     <meta name="referrer" content="no-referrer">
 
     <title>Tactical Cipher Generator | Military-Grade Password Forge</title>
@@ -1125,6 +1125,30 @@
                     this.showToast('No cipher to copy!', 'error');
                     return;
                 }
+                
+                // Fallback for browsers that don't support the Clipboard API
+                if (!navigator.clipboard) {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = password;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-999999px';
+                    textArea.style.top = '-999999px';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    
+                    try {
+                        document.execCommand('copy');
+                        this.showToast('Cipher securely copied to clipboard!');
+                    } catch (err) {
+                        console.error('Failed to copy: ', err);
+                        this.showToast('Failed to copy cipher.', 'error');
+                    }
+                    
+                    document.body.removeChild(textArea);
+                    return;
+                }
+                
                 navigator.clipboard.writeText(password).then(() => {
                     this.showToast('Cipher securely copied to clipboard!');
                 }).catch(err => {
@@ -1167,6 +1191,12 @@
             // --- History Management ---
             saveToHistory(password) {
                 try {
+                    // Check if localStorage is available
+                    if (typeof Storage === 'undefined') {
+                        console.warn('localStorage is not available on this device.');
+                        return;
+                    }
+                    
                     let history = JSON.parse(localStorage.getItem(CONFIG.HISTORY_KEY) || '[]');
                     if (history.length > 0 && history[0].password === password) return; // Avoid duplicates
                     
@@ -1188,6 +1218,12 @@
 
             renderHistory() {
                 try {
+                    // Check if localStorage is available
+                    if (typeof Storage === 'undefined') {
+                        elements.historyList.innerHTML = '<li class="history-item">History is not available on this device.</li>';
+                        return;
+                    }
+                    
                     const history = JSON.parse(localStorage.getItem(CONFIG.HISTORY_KEY) || '[]');
                     elements.historyList.innerHTML = '';
                     if (history.length === 0) {
@@ -1215,15 +1251,49 @@
                     document.querySelectorAll('.history-copy-btn').forEach(btn => {
                         btn.addEventListener('click', (e) => {
                             const password = e.currentTarget.dataset.password;
-                            navigator.clipboard.writeText(password).then(() => {
-                                this.showToast('Historical cipher copied!');
-                            });
+                            this.copyToClipboard(password);
                         });
                     });
                 } catch (e) {
                     console.error('Failed to render history:', e);
                     elements.historyList.innerHTML = '<li class="history-item">Error loading history.</li>';
                 }
+            },
+
+            /**
+             * Helper function to copy text to clipboard with fallback
+             * @param {string} text The text to copy
+             */
+            copyToClipboard(text) {
+                // Fallback for browsers that don't support the Clipboard API
+                if (!navigator.clipboard) {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-999999px';
+                    textArea.style.top = '-999999px';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    
+                    try {
+                        document.execCommand('copy');
+                        this.showToast('Historical cipher copied!');
+                    } catch (err) {
+                        console.error('Failed to copy: ', err);
+                        this.showToast('Failed to copy cipher.', 'error');
+                    }
+                    
+                    document.body.removeChild(textArea);
+                    return;
+                }
+                
+                navigator.clipboard.writeText(text).then(() => {
+                    this.showToast('Historical cipher copied!');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    this.showToast('Failed to copy cipher.', 'error');
+                });
             },
 
             showClearConfirmation() {
@@ -1241,6 +1311,12 @@
 
             clearHistory() {
                 try {
+                    // Check if localStorage is available
+                    if (typeof Storage === 'undefined') {
+                        this.showToast('History is not available on this device.', 'error');
+                        return;
+                    }
+                    
                     localStorage.removeItem(CONFIG.HISTORY_KEY);
                     this.renderHistory();
                     this.hideClearConfirmation();
@@ -1254,7 +1330,15 @@
 
         // --- Initialize Application on DOM Content Loaded ---
         document.addEventListener('DOMContentLoaded', () => {
-            App.init();
+            try {
+                App.init();
+            } catch (error) {
+                console.error('Failed to initialize application:', error);
+                const errorElement = document.getElementById('passwordOutput');
+                if (errorElement) {
+                    errorElement.textContent = 'Application failed to initialize. Please refresh the page.';
+                }
+            }
         });
 
     })();

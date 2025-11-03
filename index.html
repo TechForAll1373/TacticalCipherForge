@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Security & Performance Meta Tags -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:;">
+    <meta name="referrer" content="no-referrer">
+
+    <title>Tactical Cipher Generator | Military-Grade Password Forge</title>
+    <meta name="description" content="An advanced, military-grade password generator. Forge unbreakable ciphers with top-tier entropy, security, and tactical precision. Built for the modern operative.">
+    <meta name="keywords" content="password generator, military, security, tactical, cipher, advanced, encryption, secure, strong password, cybersecurity">
+    <meta name="author" content="Tactical Systems Division">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts: Monospace for that military terminal feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Core Variables & Theming --- */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-cyan: #00ffff;
+            --accent-green: #00ff41;
+            --accent-red: #ff4136;
+            --accent-orange: #ff851b;
+            --border-color: #333;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        /* --- Utility Classes --- */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* --- Global Styles & Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-mono);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Military Grid Background - more subtle */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridMove 60s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* --- Main Container --- */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            animation: containerPulse 15s infinite alternate;
+        }
+        
+        @keyframes containerPulse {
+            0% { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); }
+            100% { box-shadow: 0 10px 40px rgba(0, 255, 255, 0.1); }
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+            animation: scanline 10s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* --- Header --- */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: flicker 3s infinite alternate;
+            position: relative;
+        }
+
+        h1::after {
+            content: 'CLASSIFIED';
+            position: absolute;
+            top: -20px;
+            right: 0;
+            font-size: 0.6rem;
+            color: var(--accent-red);
+            letter-spacing: 2px;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow:
+                    0 0 4px var(--accent-cyan),
+                    0 0 11px var(--accent-cyan),
+                    0 0 19px var(--accent-cyan),
+                    0 0 40px var(--accent-green),
+                    0 0 80px var(--accent-green);
+            }
+            20%, 24%, 55% {       
+                text-shadow: none;
+            }
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* --- Control Panel --- */
+        .control-panel {
+            display: grid;
+            gap: 25px;
+        }
+
+        .control-group {
+            background-color: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-group::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            animation: controlGlow 3s infinite;
+        }
+
+        @keyframes controlGlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        /* --- Slider --- */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: var(--bg-primary);
+            border-radius: 5px;
+            outline: none;
+            transition: opacity 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-green);
+            transition: all 0.3s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover, input[type="range"]::-webkit-slider-thumb:focus {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px var(--accent-green);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-green);
+            transition: all 0.3s;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover, input[type="range"]::-moz-range-thumb:focus {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px var(--accent-green);
+        }
+        
+        #lengthValue {
+            min-width: 50px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            position: relative;
+        }
+
+        #lengthValue::after {
+            content: 'CHARS';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            right: 0;
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- Accessible Checkboxes --- */
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            position: relative;
+            padding: 5px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        .checkbox-item:hover {
+            background-color: rgba(0, 255, 255, 0.1);
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            /* Hide the actual checkbox */
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkbox-visual {
+            height: 20px;
+            width: 20px;
+            background-color: var(--bg-primary);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 4px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .checkbox-item input[type="checkbox"]:checked ~ .checkbox-visual {
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
+            animation: checkboxPulse 0.5s;
+        }
+
+        @keyframes checkboxPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .checkbox-item input[type="checkbox"]:checked ~ .checkbox-visual::after {
+            content: '\f00c'; /* Font Awesome checkmark */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--bg-primary);
+            font-size: 12px;
+        }
+        
+        .checkbox-item input[type="checkbox"]:focus ~ .checkbox-visual {
+            box-shadow: 0 0 0 2px var(--bg-secondary), 0 0 0 4px var(--accent-cyan);
+        }
+
+        /* --- Output Display --- */
+        .output-display {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            word-break: break-all;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            color: var(--accent-green);
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px var(--accent-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .output-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            animation: outputScan 3s infinite;
+        }
+
+        @keyframes outputScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* --- Strength Indicator --- */
+        .strength-container {
+            margin-top: 10px;
+        }
+        .strength-bar {
+            width: 100%;
+            height: 10px;
+            background-color: var(--bg-primary);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        .strength-bar-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease, background-color 0.4s ease;
+            position: relative;
+        }
+        .strength-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: strengthScan 2s infinite;
+        }
+        @keyframes strengthScan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .strength-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        .strength-text {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .entropy-text {
+            color: var(--text-secondary);
+        }
+
+        /* --- Action Buttons --- */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .btn {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:focus {
+            outline: 2px solid var(--accent-cyan);
+            outline-offset: 2px;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-green), var(--accent-cyan));
+            color: var(--bg-primary);
+        }
+        .btn-secondary {
+            background-color: var(--bg-tertiary);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+        .btn-secondary:hover {
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+        }
+
+        /* --- History Log --- */
+        .history-log {
+            margin-top: 30px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        .history-log h2 {
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .history-log h2::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .history-list {
+            list-style: none;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: var(--bg-tertiary);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .history-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        .history-list::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--accent-cyan);
+            border-radius: 4px;
+        }
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        .history-item:hover {
+            background-color: rgba(0, 255, 255, 0.1);
+        }
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        .history-password-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .history-password {
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            word-break: break-all;
+        }
+        .history-timestamp {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+        .history-copy-btn {
+            background: none;
+            border: none;
+            color: var(--accent-cyan);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.2s, transform 0.2s;
+            padding: 5px;
+        }
+        .history-copy-btn:hover, .history-copy-btn:focus {
+            color: var(--accent-green);
+            transform: scale(1.2);
+            outline: none;
+        }
+        .clear-history-btn {
+            margin-top: 10px;
+            background-color: var(--accent-red);
+            color: var(--text-primary);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .clear-history-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: clearBtnScan 3s infinite;
+        }
+        @keyframes clearBtnScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        .clear-history-btn:hover {
+            box-shadow: 0 5px 15px rgba(255, 65, 54, 0.4);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: var(--accent-green);
+            text-decoration: underline;
+        }
+        .heart {
+            color: var(--accent-red);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        /* --- Toast Notification --- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-green);
+            color: var(--bg-primary);
+            padding: 15px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 1001; /* Above modal */
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Confirmation Modal --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--accent-red);
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            animation: modalAppear 0.3s;
+        }
+        @keyframes modalAppear {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-title {
+            color: var(--accent-red);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .modal-text {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .modal-btn:focus {
+            outline: 2px solid var(--accent-cyan);
+            outline-offset: 2px;
+        }
+        .modal-confirm {
+            background-color: var(--accent-red);
+            color: var(--text-primary);
+        }
+        .modal-cancel {
+            background-color: var(--bg-tertiary);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+        }
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+            .toast {
+                right: 10px;
+                left: 10px;
+                bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <header>
+            <h1>Tactical Cipher Generator</h1>
+            <p class="subtitle">Military-Grade Password Forge | High-Entropy Cipher Creation</p>
+        </header>
+
+        <section class="control-panel">
+            <div class="control-group">
+                <label for="lengthSlider">Cipher Length</label>
+                <div class="slider-container">
+                    <input type="range" id="lengthSlider" min="8" max="256" value="32">
+                    <span id="lengthValue">32</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Character Set Protocols</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="uppercase" checked>
+                        <span class="checkbox-visual"></span>
+                        <span>ALPHA (A-Z)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="lowercase" checked>
+                        <span class="checkbox-visual"></span>
+                        <span>ALPHA (a-z)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="numbers" checked>
+                        <span class="checkbox-visual"></span>
+                        <span>NUMERIC (0-9)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="symbols" checked>
+                        <span class="checkbox-visual"></span>
+                        <span>SPECIAL (!@#$...)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="excludeAmbiguous">
+                        <span class="checkbox-visual"></span>
+                        <span>Exclude Ambiguous</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section class="output-section">
+            <div class="output-display" id="passwordOutput" aria-live="polite">
+                <!-- Generated password will appear here -->
+            </div>
+            <div class="strength-container">
+                <div class="strength-bar">
+                    <div class="strength-bar-fill" id="strengthBarFill"></div>
+                </div>
+                <div class="strength-label">
+                    <span class="strength-text" id="strengthText">STRENGTH: AWAITING GENERATION</span>
+                    <span class="entropy-text" id="entropyText">Entropy: 0 bits</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="action-buttons">
+            <button class="btn btn-primary" id="generateBtn">
+                <i class="fas fa-shield-alt"></i> Generate Cipher
+            </button>
+            <button class="btn btn-secondary" id="copyBtn">
+                <i class="fas fa-clipboard"></i> Secure Copy
+            </button>
+        </section>
+
+        <section class="history-log">
+            <h2><i class="fas fa-history"></i> Cipher History Log (Local Cache)</h2>
+            <ul class="history-list" id="historyList">
+                <!-- History items will be added here -->
+            </ul>
+            <button class="btn clear-history-btn" id="clearHistoryBtn">Clear History Log</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>Built with military love <span class="heart">❤️</span> by Tactical Systems Division</p>
+        <p><a href="https://github.com/TechForAll1373/Nexus-Core-Stealth-Links" target="_blank" rel="noopener noreferrer">View Core Stealth Links</a></p>
+    </footer>
+
+    <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modal-title">CONFIRM CLEARANCE</h3>
+            <p class="modal-text">Are you sure you want to permanently clear the history log? This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-confirm" id="confirmClear">CONFIRM</button>
+                <button class="modal-btn modal-cancel" id="cancelClear">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    /**
+     * Tactical Cipher Generator - Robust and Secure
+     * Encapsulated in an IIFE to prevent global scope pollution.
+     */
+    (function() {
+        'use strict';
+
+        // --- Configuration & Constants ---
+        const CONFIG = {
+            CHARSET: {
+                ALPHA: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                alpha: 'abcdefghijklmnopqrstuvwxyz',
+                NUMERIC: '0123456789',
+                SPECIAL: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+            },
+            AMBIGUOUS_CHARS: 'ilLI1oO0',
+            HISTORY_KEY: 'tacticalCipherHistory',
+            MAX_HISTORY_ITEMS: 10,
+            DEBOUNCE_DELAY: 150 // ms for slider input
+        };
+
+        // --- DOM Element Cache ---
+        const elements = {
+            lengthSlider: document.getElementById('lengthSlider'),
+            lengthValue: document.getElementById('lengthValue'),
+            uppercase: document.getElementById('uppercase'),
+            lowercase: document.getElementById('lowercase'),
+            numbers: document.getElementById('numbers'),
+            symbols: document.getElementById('symbols'),
+            excludeAmbiguous: document.getElementById('excludeAmbiguous'),
+            passwordOutput: document.getElementById('passwordOutput'),
+            generateBtn: document.getElementById('generateBtn'),
+            copyBtn: document.getElementById('copyBtn'),
+            strengthBarFill: document.getElementById('strengthBarFill'),
+            strengthText: document.getElementById('strengthText'),
+            entropyText: document.getElementById('entropyText'),
+            historyList: document.getElementById('historyList'),
+            clearHistoryBtn: document.getElementById('clearHistoryBtn'),
+            toast: document.getElementById('toast'),
+            confirmModal: document.getElementById('confirmModal'),
+            confirmClear: document.getElementById('confirmClear'),
+            cancelClear: document.getElementById('cancelClear')
+        };
+        let lastFocusedElement;
+
+        // --- Utility Functions ---
+        /**
+         * Debounces a function call.
+         * @param {Function} func The function to debounce.
+         * @param {number} delay The delay in milliseconds.
+         * @returns {Function} The debounced function.
+         */
+        function debounce(func, delay) {
+            let timeoutId;
+            return function(...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+        /**
+         * Escapes special characters for use in a regular expression.
+         * @param {string} string The string to escape.
+         * @returns {string} The escaped string.
+         */
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        // --- Core Application Logic ---
+        const App = {
+            /**
+             * Initializes the application.
+             */
+            init() {
+                this.checkCryptoSupport();
+                this.cacheElements();
+                this.bindEvents();
+                this.generatePassword(); // Initial generation
+                this.loadHistory();
+            },
+
+            /**
+             * Checks for secure crypto API support.
+             */
+            checkCryptoSupport() {
+                if (!window.crypto || !window.crypto.getRandomValues) {
+                    this.fatalError('CRITICAL ERROR: Secure random number generation is not available in this browser. This generator cannot operate securely.');
+                    throw new Error('Crypto API not supported.');
+                }
+            },
+
+            /**
+             * Caches DOM elements and checks for their existence.
+             */
+            cacheElements() {
+                for (const key in elements) {
+                    if (!elements[key]) {
+                        console.error(`Element not found: ${key}`);
+                    }
+                }
+            },
+
+            /**
+             * Binds event listeners to DOM elements.
+             */
+            bindEvents() {
+                const debouncedGenerate = debounce(this.generatePassword.bind(this), CONFIG.DEBOUNCE_DELAY);
+
+                elements.lengthSlider.addEventListener('input', () => {
+                    elements.lengthValue.textContent = elements.lengthSlider.value;
+                    debouncedGenerate();
+                });
+
+                [elements.uppercase, elements.lowercase, elements.numbers, elements.symbols, elements.excludeAmbiguous].forEach(checkbox => {
+                    checkbox.addEventListener('change', this.generatePassword.bind(this));
+                });
+
+                elements.generateBtn.addEventListener('click', this.generatePassword.bind(this));
+                elements.copyBtn.addEventListener('click', this.copyPasswordToClipboard.bind(this));
+                elements.clearHistoryBtn.addEventListener('click', this.showClearConfirmation.bind(this));
+                elements.confirmClear.addEventListener('click', this.clearHistory.bind(this));
+                elements.cancelClear.addEventListener('click', this.hideClearConfirmation.bind(this));
+                elements.confirmModal.addEventListener('click', (e) => {
+                    if (e.target === elements.confirmModal) this.hideClearConfirmation();
+                });
+                elements.confirmModal.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') this.hideClearConfirmation();
+                });
+            },
+
+            /**
+             * Generates a new password based on user settings.
+             */
+            generatePassword() {
+                const length = parseInt(elements.lengthSlider.value, 10);
+                if (isNaN(length) || length < 8 || length > 256) {
+                    this.showError('Invalid cipher length.');
+                    return;
+                }
+
+                let charPool = '';
+                let guaranteedChars = [];
+
+                if (elements.uppercase.checked) {
+                    charPool += CONFIG.CHARSET.ALPHA;
+                    guaranteedChars.push(this.getRandomChar(CONFIG.CHARSET.ALPHA));
+                }
+                if (elements.lowercase.checked) {
+                    charPool += CONFIG.CHARSET.alpha;
+                    guaranteedChars.push(this.getRandomChar(CONFIG.CHARSET.alpha));
+                }
+                if (elements.numbers.checked) {
+                    charPool += CONFIG.CHARSET.NUMERIC;
+                    guaranteedChars.push(this.getRandomChar(CONFIG.CHARSET.NUMERIC));
+                }
+                if (elements.symbols.checked) {
+                    charPool += CONFIG.CHARSET.SPECIAL;
+                    guaranteedChars.push(this.getRandomChar(CONFIG.CHARSET.SPECIAL));
+                }
+
+                if (elements.excludeAmbiguous.checked) {
+                    const regex = new RegExp(`[${escapeRegExp(CONFIG.AMBIGUOUS_CHARS)}]`, 'g');
+                    charPool = charPool.replace(regex, '');
+                }
+
+                if (charPool.length === 0) {
+                    this.showError('ERROR: Select at least one character set.');
+                    this.updateStrengthIndicator(0);
+                    return;
+                }
+
+                let password = '';
+                for (let i = guaranteedChars.length; i < length; i++) {
+                    password += this.getRandomChar(charPool);
+                }
+                
+                password = this.shuffleArray(guaranteedChars.concat(password.split(''))).join('');
+
+                elements.passwordOutput.textContent = password;
+                this.updateStrengthIndicator(this.calculateEntropy(charPool.length, length));
+                this.saveToHistory(password);
+            },
+
+            /**
+             * Gets a random character from a given character set.
+             * @param {string} charSet The set of characters to choose from.
+             * @returns {string} A single random character.
+             */
+            getRandomChar(charSet) {
+                if (charSet.length === 0) return '';
+                const randomArray = new Uint32Array(1);
+                window.crypto.getRandomValues(randomArray);
+                return charSet[randomArray[0] % charSet.length];
+            },
+            
+            /**
+             * Shuffles an array using the Fisher-Yates algorithm.
+             * @param {Array} array The array to shuffle.
+             * @returns {Array} The shuffled array.
+             */
+            shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(window.crypto.getRandomValues(new Uint32Array(1))[0] * (i + 1) / 0x100000000);
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            },
+
+            /**
+             * Calculates the entropy of a password.
+             * @param {number} poolSize The size of the character pool.
+             * @param {number} length The length of the password.
+             * @returns {number} The entropy in bits.
+             */
+            calculateEntropy(poolSize, length) {
+                if (poolSize === 0 || length === 0) return 0;
+                return Math.round(length * Math.log2(poolSize));
+            },
+
+            /**
+             * Updates the strength indicator UI.
+             * @param {number} entropy The calculated entropy.
+             */
+            updateStrengthIndicator(entropy) {
+                let strength, color, width;
+                if (entropy < 40) {
+                    strength = 'WEAK'; color = 'var(--accent-red)'; width = '25%';
+                } else if (entropy < 60) {
+                    strength = 'MODERATE'; color = 'var(--accent-orange)'; width = '50%';
+                } else if (entropy < 80) {
+                    strength = 'STRONG'; color = 'var(--accent-cyan)'; width = '75%';
+                } else {
+                    strength = 'MILITARY-GRADE'; color = 'var(--accent-green)'; width = '100%';
+                }
+
+                elements.strengthBarFill.style.width = width;
+                elements.strengthBarFill.style.backgroundColor = color;
+                elements.strengthText.textContent = `STRENGTH: ${strength}`;
+                elements.strengthText.style.color = color;
+                elements.entropyText.textContent = `Entropy: ${entropy} bits`;
+            },
+
+            /**
+             * Copies the generated password to the clipboard.
+             */
+            copyPasswordToClipboard() {
+                const password = elements.passwordOutput.textContent;
+                if (!password || password.startsWith('ERROR')) {
+                    this.showToast('No cipher to copy!', 'error');
+                    return;
+                }
+                navigator.clipboard.writeText(password).then(() => {
+                    this.showToast('Cipher securely copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    this.showToast('Failed to copy cipher.', 'error');
+                });
+            },
+
+            /**
+             * Shows a toast notification.
+             * @param {string} message The message to display.
+             * @param {string} type The type of toast (success/error).
+             */
+            showToast(message, type = 'success') {
+                elements.toast.textContent = message;
+                elements.toast.style.backgroundColor = type === 'success' ? 'var(--accent-green)' : 'var(--accent-red)';
+                elements.toast.classList.add('show');
+                setTimeout(() => elements.toast.classList.remove('show'), 3000);
+            },
+            
+            /**
+             * Shows a fatal error message and disables the app.
+             * @param {string} message The error message.
+             */
+            fatalError(message) {
+                elements.passwordOutput.textContent = message;
+                elements.generateBtn.disabled = true;
+                elements.copyBtn.disabled = true;
+                this.showToast(message, 'error');
+            },
+
+            /**
+             * Shows a non-fatal error message in the output area.
+             * @param {string} message The error message.
+             */
+            showError(message) {
+                elements.passwordOutput.textContent = message;
+            },
+
+            // --- History Management ---
+            saveToHistory(password) {
+                try {
+                    let history = JSON.parse(localStorage.getItem(CONFIG.HISTORY_KEY) || '[]');
+                    if (history.length > 0 && history[0].password === password) return; // Avoid duplicates
+                    
+                    history.unshift({ password, timestamp: new Date().toISOString() });
+                    if (history.length > CONFIG.MAX_HISTORY_ITEMS) {
+                        history = history.slice(0, CONFIG.MAX_HISTORY_ITEMS);
+                    }
+                    localStorage.setItem(CONFIG.HISTORY_KEY, JSON.stringify(history));
+                    this.renderHistory();
+                } catch (e) {
+                    console.error('Failed to save to history:', e);
+                    this.showToast('Could not save to history log.', 'error');
+                }
+            },
+
+            loadHistory() {
+                this.renderHistory();
+            },
+
+            renderHistory() {
+                try {
+                    const history = JSON.parse(localStorage.getItem(CONFIG.HISTORY_KEY) || '[]');
+                    elements.historyList.innerHTML = '';
+                    if (history.length === 0) {
+                        elements.historyList.innerHTML = '<li class="history-item">History log is empty.</li>';
+                        return;
+                    }
+                    history.forEach(item => {
+                        const li = document.createElement('li');
+                        li.className = 'history-item';
+                        const date = new Date(item.timestamp);
+                        const timeString = date.toLocaleTimeString('en-US', { hour12: false });
+
+                        li.innerHTML = `
+                            <div class="history-password-wrapper">
+                                <span class="history-password">${item.password}</span>
+                                <span class="history-timestamp">${timeString}</span>
+                            </div>
+                            <button class="history-copy-btn" data-password="${item.password}" aria-label="Copy historical cipher">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        `;
+                        elements.historyList.appendChild(li);
+                    });
+
+                    document.querySelectorAll('.history-copy-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const password = e.currentTarget.dataset.password;
+                            navigator.clipboard.writeText(password).then(() => {
+                                this.showToast('Historical cipher copied!');
+                            });
+                        });
+                    });
+                } catch (e) {
+                    console.error('Failed to render history:', e);
+                    elements.historyList.innerHTML = '<li class="history-item">Error loading history.</li>';
+                }
+            },
+
+            showClearConfirmation() {
+                lastFocusedElement = document.activeElement;
+                elements.confirmModal.style.display = 'flex';
+                elements.confirmModal.setAttribute('aria-hidden', 'false');
+                elements.confirmClear.focus();
+            },
+
+            hideClearConfirmation() {
+                elements.confirmModal.style.display = 'none';
+                elements.confirmModal.setAttribute('aria-hidden', 'true');
+                if (lastFocusedElement) lastFocusedElement.focus();
+            },
+
+            clearHistory() {
+                try {
+                    localStorage.removeItem(CONFIG.HISTORY_KEY);
+                    this.renderHistory();
+                    this.hideClearConfirmation();
+                    this.showToast('History log cleared.');
+                } catch (e) {
+                    console.error('Failed to clear history:', e);
+                    this.showToast('Could not clear history log.', 'error');
+                }
+            }
+        };
+
+        // --- Initialize Application on DOM Content Loaded ---
+        document.addEventListener('DOMContentLoaded', () => {
+            App.init();
+        });
+
+    })();
+    </script>
+</body>
+</html>

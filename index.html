@@ -72,7 +72,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 10px;
             line-height: 1.6;
             position: relative;
             overflow-x: hidden;
@@ -106,7 +106,7 @@
             background-color: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 40px;
+            padding: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
@@ -137,16 +137,16 @@
         /* --- Header --- */
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
+            padding-bottom: 15px;
             position: relative;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
             -webkit-background-clip: text;
@@ -159,11 +159,11 @@
         h1::after {
             content: 'CLASSIFIED';
             position: absolute;
-            top: -20px;
+            top: -15px;
             right: 0;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             color: var(--accent-red);
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             animation: blink 2s infinite;
         }
 
@@ -188,19 +188,19 @@
 
         .subtitle {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
             margin-top: 5px;
         }
 
         /* --- Control Panel --- */
         .control-panel {
             display: grid;
-            gap: 25px;
+            gap: 20px;
         }
 
         .control-group {
             background-color: var(--bg-tertiary);
-            padding: 20px;
+            padding: 15px;
             border-radius: 5px;
             border: 1px solid var(--border-color);
             position: relative;
@@ -229,7 +229,7 @@
             color: var(--accent-cyan);
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.85rem;
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
             letter-spacing: 1px;
         }
 
@@ -286,7 +286,7 @@
         #lengthValue {
             min-width: 50px;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             font-weight: bold;
             color: var(--accent-green);
             position: relative;
@@ -295,24 +295,24 @@
         #lengthValue::after {
             content: 'CHARS';
             position: absolute;
-            bottom: -15px;
+            bottom: -12px;
             left: 0;
             right: 0;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             color: var(--text-secondary);
         }
 
         /* --- Accessible Checkboxes --- */
         .checkbox-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
         }
 
         .checkbox-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
             position: relative;
             padding: 5px;
@@ -334,8 +334,8 @@
         }
 
         .checkbox-visual {
-            height: 20px;
-            width: 20px;
+            height: 18px;
+            width: 18px;
             background-color: var(--bg-primary);
             border: 2px solid var(--accent-cyan);
             border-radius: 4px;
@@ -343,6 +343,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
         
         .checkbox-item input[type="checkbox"]:checked ~ .checkbox-visual {
@@ -362,11 +363,15 @@
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             color: var(--bg-primary);
-            font-size: 12px;
+            font-size: 10px;
         }
         
         .checkbox-item input[type="checkbox"]:focus ~ .checkbox-visual {
             box-shadow: 0 0 0 2px var(--bg-secondary), 0 0 0 4px var(--accent-cyan);
+        }
+
+        .checkbox-item span:not(.checkbox-visual) {
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
         }
 
         /* --- Output Display --- */
@@ -376,13 +381,13 @@
             padding: 15px;
             border-radius: 5px;
             font-family: var(--font-mono);
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             word-break: break-all;
             min-height: 60px;
             display: flex;
             align-items: center;
             color: var(--accent-green);
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-shadow: 0 0 5px var(--accent-green);
             position: relative;
             overflow: hidden;
@@ -439,7 +444,7 @@
         .strength-label {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
+            font-size: clamp(0.7rem, 2vw, 0.8rem);
             margin-top: 5px;
         }
         .strength-text {
@@ -453,16 +458,16 @@
         /* --- Action Buttons --- */
         .action-buttons {
             display: flex;
-            gap: 15px;
-            margin-top: 25px;
+            gap: 10px;
+            margin-top: 20px;
         }
         .btn {
             flex: 1;
-            padding: 15px 20px;
+            padding: 12px 15px;
             border: none;
             border-radius: 5px;
             font-family: var(--font-mono);
-            font-size: 1rem;
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -470,6 +475,10 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         .btn:focus {
             outline: 2px solid var(--accent-cyan);
@@ -510,25 +519,25 @@
 
         /* --- History Log --- */
         .history-log {
-            margin-top: 30px;
+            margin-top: 20px;
             border-top: 1px solid var(--border-color);
-            padding-top: 20px;
+            padding-top: 15px;
         }
         .history-log h2 {
             color: var(--accent-cyan);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             text-transform: uppercase;
             letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         .history-log h2::before {
             content: '';
             display: inline-block;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background-color: var(--accent-red);
             border-radius: 50%;
             animation: pulse 1.5s infinite;
@@ -540,29 +549,29 @@
         }
         .history-list {
             list-style: none;
-            max-height: 200px;
+            max-height: 150px;
             overflow-y: auto;
             background-color: var(--bg-tertiary);
-            padding: 10px;
+            padding: 8px;
             border-radius: 5px;
         }
         .history-list::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         .history-list::-webkit-scrollbar-track {
             background: var(--bg-primary);
         }
         .history-list::-webkit-scrollbar-thumb {
             background: var(--accent-cyan);
-            border-radius: 4px;
+            border-radius: 3px;
         }
         .history-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px;
+            padding: 6px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 0.9rem;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
             transition: background-color 0.3s;
         }
         .history-item:hover {
@@ -574,7 +583,9 @@
         .history-password-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
+            flex: 1;
+            min-width: 0;
         }
         .history-password {
             color: var(--text-secondary);
@@ -582,7 +593,7 @@
             word-break: break-all;
         }
         .history-timestamp {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: var(--text-secondary);
             opacity: 0.7;
         }
@@ -591,9 +602,10 @@
             border: none;
             color: var(--accent-cyan);
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: color 0.2s, transform 0.2s;
             padding: 5px;
+            flex-shrink: 0;
         }
         .history-copy-btn:hover, .history-copy-btn:focus {
             color: var(--accent-green);
@@ -601,7 +613,7 @@
             outline: none;
         }
         .clear-history-btn {
-            margin-top: 10px;
+            margin-top: 8px;
             background-color: var(--accent-red);
             color: var(--text-primary);
             width: 100%;
@@ -629,24 +641,70 @@
         /* --- Footer --- */
         footer {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
+            margin-top: 20px;
+            padding-top: 15px;
             border-top: 1px solid var(--border-color);
-            font-size: 0.9rem;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
             color: var(--text-secondary);
         }
-        footer a {
+        footer p {
+            margin-bottom: 8px;
+        }
+        .footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             color: var(--accent-cyan);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid transparent;
+            background-color: rgba(0, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            min-height: 44px; /* Minimum touch target size for mobile */
         }
-        footer a:hover {
+        .footer-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .footer-link:hover, .footer-link:focus {
             color: var(--accent-green);
-            text-decoration: underline;
+            text-decoration: none;
+            border-color: var(--accent-cyan);
+            background-color: rgba(0, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
+        }
+        .footer-link:hover::before, .footer-link:focus::before {
+            left: 100%;
+        }
+        .footer-link:active {
+            transform: translateY(0);
+        }
+        .footer-link i {
+            font-size: 1.1em;
+            transition: transform 0.3s ease;
+        }
+        .footer-link:hover i, .footer-link:focus i {
+            transform: rotate(15deg) scale(1.1);
+        }
+        .external-link-indicator {
+            font-size: 0.8em;
+            opacity: 0.8;
+            margin-left: 2px;
         }
         .heart {
             color: var(--accent-red);
             animation: heartbeat 1.5s ease-in-out infinite;
+            display: inline-block;
         }
         @keyframes heartbeat {
             0% { transform: scale(1); }
@@ -659,11 +717,12 @@
         /* --- Toast Notification --- */
         .toast {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 20px;
+            right: 20px;
+            left: 20px;
             background-color: var(--accent-green);
             color: var(--bg-primary);
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: 5px;
             font-weight: bold;
             text-transform: uppercase;
@@ -673,6 +732,8 @@
             transform: translateY(20px);
             transition: opacity 0.3s, transform 0.3s;
             z-index: 1001; /* Above modal */
+            text-align: center;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
         }
         .toast.show {
             opacity: 1;
@@ -691,6 +752,7 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
         .modal-content {
             background-color: var(--bg-secondary);
@@ -698,7 +760,7 @@
             border-radius: 5px;
             padding: 20px;
             max-width: 400px;
-            width: 90%;
+            width: 100%;
             text-align: center;
             animation: modalAppear 0.3s;
         }
@@ -711,10 +773,12 @@
             margin-bottom: 15px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: clamp(1rem, 3vw, 1.2rem);
         }
         .modal-text {
             margin-bottom: 20px;
             color: var(--text-primary);
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
         }
         .modal-buttons {
             display: flex;
@@ -722,7 +786,7 @@
             justify-content: center;
         }
         .modal-btn {
-            padding: 10px 20px;
+            padding: 10px 15px;
             border: none;
             border-radius: 5px;
             font-family: var(--font-mono);
@@ -731,6 +795,7 @@
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
         }
         .modal-btn:focus {
             outline: 2px solid var(--accent-cyan);
@@ -752,21 +817,97 @@
         /* --- Responsive Design --- */
         @media (max-width: 768px) {
             .container {
-                padding: 20px;
+                padding: 15px;
             }
-            h1 {
-                font-size: 2rem;
-            }
+            
             .action-buttons {
                 flex-direction: column;
             }
+            
             .checkbox-group {
                 grid-template-columns: 1fr;
             }
-            .toast {
-                right: 10px;
-                left: 10px;
-                bottom: 10px;
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+            
+            .modal-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                letter-spacing: 1px;
+            }
+            
+            .control-group {
+                padding: 10px;
+            }
+            
+            .slider-container {
+                gap: 10px;
+            }
+            
+            .output-display {
+                padding: 10px;
+                min-height: 50px;
+            }
+            
+            .btn {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+            
+            .footer-link {
+                padding: 10px 15px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                padding: 40px;
+            }
+            
+            .control-group {
+                padding: 20px;
+            }
+        }
+
+        /* --- High contrast mode support --- */
+        @media (prefers-contrast: high) {
+            .footer-link {
+                border-color: var(--accent-cyan);
+            }
+            
+            .footer-link:hover, .footer-link:focus {
+                background-color: var(--accent-cyan);
+                color: var(--bg-primary);
+            }
+        }
+
+        /* --- Reduced motion support --- */
+        @media (prefers-reduced-motion: reduce) {
+            .footer-link::before,
+            .footer-link:hover::before,
+            .footer-link:focus::before {
+                animation: none;
+                transition: none;
+            }
+            
+            .footer-link:hover i,
+            .footer-link:focus i {
+                transform: none;
             }
         }
     </style>
@@ -855,7 +996,17 @@
 
     <footer>
         <p>Built with military love <span class="heart">❤️</span> by Tactical Systems Division</p>
-        <p><a href="https://github.com/TechForAll1373/Nexus-Core-Stealth-Links" target="_blank" rel="noopener noreferrer">View Core Stealth Links</a></p>
+        <p>
+            <a href="https://github.com/TechForAll1373/Nexus-Core-Stealth-Links" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="footer-link"
+               aria-label="View Core Stealth Links on GitHub (opens in new tab)">
+                <i class="fab fa-github"></i>
+                <span>View Core Stealth Links</span>
+                <i class="fas fa-external-link-alt external-link-indicator" aria-hidden="true"></i>
+            </a>
+        </p>
     </footer>
 
     <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
@@ -914,7 +1065,8 @@
             toast: document.getElementById('toast'),
             confirmModal: document.getElementById('confirmModal'),
             confirmClear: document.getElementById('confirmClear'),
-            cancelClear: document.getElementById('cancelClear')
+            cancelClear: document.getElementById('cancelClear'),
+            footerLink: document.querySelector('.footer-link')
         };
         let lastFocusedElement;
 
@@ -953,6 +1105,7 @@
                 this.bindEvents();
                 this.generatePassword(); // Initial generation
                 this.loadHistory();
+                this.enhanceFooterLink();
             },
 
             /**
@@ -1001,6 +1154,77 @@
                 });
                 elements.confirmModal.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape') this.hideClearConfirmation();
+                });
+
+                // Add touch event support for mobile
+                this.addTouchSupport();
+            },
+
+            /**
+             * Enhances the footer link for better accessibility and user experience
+             */
+            enhanceFooterLink() {
+                if (!elements.footerLink) return;
+
+                // Add keyboard navigation support
+                elements.footerLink.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.openLinkWithFeedback(elements.footerLink.href);
+                    }
+                });
+
+                // Add touch feedback for mobile
+                elements.footerLink.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                }, { passive: true });
+
+                elements.footerLink.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                }, { passive: true });
+
+                // Add click handler with feedback
+                elements.footerLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.openLinkWithFeedback(elements.footerLink.href);
+                });
+            },
+
+            /**
+             * Opens a link with user feedback
+             * @param {string} url The URL to open
+             */
+            openLinkWithFeedback(url) {
+                // Show loading state
+                const originalContent = elements.footerLink.innerHTML;
+                elements.footerLink.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Opening...</span>';
+                elements.footerLink.style.pointerEvents = 'none';
+
+                // Open in new tab
+                window.open(url, '_blank', 'noopener,noreferrer');
+
+                // Restore original state after a short delay
+                setTimeout(() => {
+                    elements.footerLink.innerHTML = originalContent;
+                    elements.footerLink.style.pointerEvents = '';
+                    this.showToast('Link opened in new tab!');
+                }, 500);
+            },
+
+            /**
+             * Adds touch event support for better mobile experience
+             */
+            addTouchSupport() {
+                // Add touch feedback to buttons
+                const buttons = document.querySelectorAll('.btn, .history-copy-btn');
+                buttons.forEach(button => {
+                    button.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(0.95)';
+                    }, { passive: true });
+                    
+                    button.addEventListener('touchend', function() {
+                        this.style.transform = '';
+                    }, { passive: true });
                 });
             },
 
@@ -1126,10 +1350,18 @@
                     return;
                 }
                 
+                this.copyToClipboard(password);
+            },
+
+            /**
+             * Helper function to copy text to clipboard with fallback
+             * @param {string} text The text to copy
+             */
+            copyToClipboard(text) {
                 // Fallback for browsers that don't support the Clipboard API
                 if (!navigator.clipboard) {
                     const textArea = document.createElement('textarea');
-                    textArea.value = password;
+                    textArea.value = text;
                     textArea.style.position = 'fixed';
                     textArea.style.left = '-999999px';
                     textArea.style.top = '-999999px';
@@ -1149,7 +1381,7 @@
                     return;
                 }
                 
-                navigator.clipboard.writeText(password).then(() => {
+                navigator.clipboard.writeText(text).then(() => {
                     this.showToast('Cipher securely copied to clipboard!');
                 }).catch(err => {
                     console.error('Failed to copy: ', err);
@@ -1258,42 +1490,6 @@
                     console.error('Failed to render history:', e);
                     elements.historyList.innerHTML = '<li class="history-item">Error loading history.</li>';
                 }
-            },
-
-            /**
-             * Helper function to copy text to clipboard with fallback
-             * @param {string} text The text to copy
-             */
-            copyToClipboard(text) {
-                // Fallback for browsers that don't support the Clipboard API
-                if (!navigator.clipboard) {
-                    const textArea = document.createElement('textarea');
-                    textArea.value = text;
-                    textArea.style.position = 'fixed';
-                    textArea.style.left = '-999999px';
-                    textArea.style.top = '-999999px';
-                    document.body.appendChild(textArea);
-                    textArea.focus();
-                    textArea.select();
-                    
-                    try {
-                        document.execCommand('copy');
-                        this.showToast('Historical cipher copied!');
-                    } catch (err) {
-                        console.error('Failed to copy: ', err);
-                        this.showToast('Failed to copy cipher.', 'error');
-                    }
-                    
-                    document.body.removeChild(textArea);
-                    return;
-                }
-                
-                navigator.clipboard.writeText(text).then(() => {
-                    this.showToast('Historical cipher copied!');
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                    this.showToast('Failed to copy cipher.', 'error');
-                });
             },
 
             showClearConfirmation() {

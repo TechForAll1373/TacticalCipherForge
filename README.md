@@ -22,10 +22,6 @@ A military-grade, client-side password generator built with modern web technolog
 
 Experience the forge in action: **[https://techforall1373.github.io/TacticalCipherForge](https://techforall1373.github.io/TacticalCipherForge)**
 
-## 📸 Screenshot
-
-*(A screenshot of the application would go here)*
-![Tactical Cipher Forge Screenshot](path/to/your/screenshot.png)
 
 ## 🛠️ How to Use
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://techforall1373.github.io/TacticalCipherForge/sitemap.xml

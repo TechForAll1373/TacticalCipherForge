@@ -1,0 +1,43 @@
+{
+  "name": "tactical-cipher-forge",
+  "version": "1.0.0",
+  "description": "A military-grade, client-side password generator built with modern web technologies.",
+  "main": "index.html",
+  "scripts": {
+    "lint:js": "eslint script.js",
+    "lint:css": "stylelint style.css",
+    "lint": "npm run lint:js && npm run lint:css",
+    "format": "prettier --write .",
+    "serve": "python -m http.server 8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "password-generator",
+    "security",
+    "javascript",
+    "html5",
+    "css3",
+    "military-grade",
+    "cybersecurity",
+    "cipher",
+    "client-side",
+    "entropy",
+    "web-app",
+    "privacy"
+  ],
+  "author": "Tactical Systems Division",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "stylelint": "^15.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechForAll1373/TacticalCipherForge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TechForAll1373/TacticalCipherForge/issues"
+  },
+  "homepage": "https://github.com/TechForAll1373/TacticalCipherForge#readme"
+}
